@@ -1,0 +1,358 @@
+[asymptote]
+import graph;
+unitsize(1cm);
+
+real f (real x) { return log(x)/log(2); };
+real g (real x) { return log(x)/log(0.5); };
+draw(graph(f, 0.1, 7));
+draw(graph(g, 0.1, 7), dashed);
+
+axes("$x$", "$y$", Arrow(SimpleHead, 3mm));
+label("$\log_2 x$", (5, f(5)), 2N);
+label("$\log_{0.5} x$", (5, g(5)), 2S);
+labelx("$O$", 0, SW);
+labelx("$1$", 1);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+pen ax=linewidth(0.2);
+unitsize(15mm);
+
+real f(real x) { return sin(x); }
+draw(graph(f, 0, 2pi));
+
+xaxis("$x$", p=ax, Ticks("%", Step=pi/2, modify=NoZero));
+yaxis("$y$", ymin=-1, ymax=1, p=ax,
+      Ticks(Step=1, step=.5, modify=NoZero));
+labelx("$\displaystyle\frac{\pi}{2}$", pi/2);
+labelx("$\displaystyle\pi$", pi);
+labelx("$\displaystyle\frac{3\pi}{2}$", 3pi/2);
+labelx("$\displaystyle2\pi$", 2pi);
+label("\huge$\sin x$", truepoint(S), 2S);
+---------------------------------------------------
+
+
+[asymptote]
+import graph;
+pen ax=linewidth(0.2);
+unitsize(15mm);
+
+real f(real x) { return cos(x); }
+draw(graph(f, 0, 2pi));
+
+xaxis(L="$x$", axis=BottomTop, p=ax,
+      LeftTicks(format="%0.2f", Step=pi/2, step=pi/4, extend=true));
+yaxis(L="$y$", axis=LeftRight, ymin=-1, ymax=1, p=ax,
+      LeftTicks(Step=1, step=.5, extend=true));
+
+label("\huge$\cos x$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+pen ax=linewidth(0.2);
+size(8cm,0);
+
+real minx = -1.25;
+real maxx = 1.25;
+
+real f(real x) { return tan(x); }
+draw(graph(f, minx, maxx));
+draw(graph(f, -pi+minx, -pi+maxx));
+draw(graph(f, pi+minx, pi+maxx));
+
+xaxis(L="$x$", p=ax,
+      ticks=Ticks(format="%0.2f", Step=pi/2, step=pi/4,
+                  modify=NoZero));
+yaxis(L="$y$", ymin=-3, ymax=3, p=ax,
+      ticks=Ticks(Step=1, step=.5, modify=NoZero));
+labelx("$O$", 0, SE);
+xequals(pi, p=ax);
+xequals(-pi, p=ax);
+label("\huge$\tan x$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+pen ax=linewidth(0.2);
+size(8cm,0);
+
+real f (real x) { return tan(x); }
+bool3 test (real x)
+{
+  real y = f(x);
+  return ( y > -3 && y < 3) ? true : false;
+}
+
+guide[] g = graph(f=f, a=-1.5pi, b=1.5pi, n=500, cond=test);
+draw(g, blue+1);
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+import graph;
+unitsize(1cm);
+
+real f (real x) {return tan(x); }
+draw(graph(f, -1.4,1.4));
+xaxis("$x$", blue+0.3);
+yaxis("$y$", blue+0.3);
+
+point C =(-4,0);
+circle cir = circle(C,1);
+draw(cir);
+line l = tangent(cir, (1,0));  // 円の接線
+draw(l, blue+0.3);
+xequals(C.x, ymin=-2, ymax=2, blue+0.3);
+
+real[] xs = {0.5, 0.8, 1.1, 1.3};
+pair[] xy = pairs(xs, map(f,xs));
+transform H = hprojection(l);  // 円の接線への水平の射影
+for (int i=0; i<xs.length; ++i) {
+  draw((xs[i],0)--xy[i]--H*xy[i]--C, dashed+0.3);
+}
+
+labelx("$\theta$", xs[0]);
+markangle("$\theta$",radius=5mm, (0,0), C, H*xy[0], p=linewidth(0.3));
+addMargins(5mm,5mm);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(15mm);
+
+real f(real x) { return asin(x); }
+draw(graph(f, -1, 1));
+
+xaxis(Label("$x$", position=EndPoint, align=2E),
+      xmax=1.3,
+      Ticks(Step=1, step=0.5, NoZero), Arrow(SimpleHead));
+yaxis(Label("$y$", EndPoint, 2N),
+      ymin=-pi/2, ymax=2,
+      Arrow(SimpleHead, 3mm));
+ytick("$\displaystyle\frac{\pi}{2}$", pi/2);
+ytick("$\displaystyle\frac{-\pi}{2}$", -pi/2);
+labelx("$O$", (0,0), SE);
+
+pair p1 = Scale((1, pi/2));
+pair p2 = Scale((1,0));
+pair p3 = Scale((0, pi/2));
+path p = p3--p1--p2;
+draw(p, dashdotted+0.2);
+draw(rotate(180)*p, dashdotted+0.2);
+
+label("\huge$\arcsin x$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(15mm);
+
+real f(real x) { return acos(x); }
+draw(graph(f, -1, 1));
+
+xaxis(Label("$x$", position=EndPoint, align=2E),
+      xmax=1.3,
+      Ticks(Step=1, step=0.5, NoZero), Arrow(SimpleHead));
+yaxis(Label("$y$", EndPoint, 2N),
+      ymin=0, ymax=3.6,
+      Arrow(SimpleHead, 3mm));
+ytick("$\displaystyle\frac{\pi}{2}$", pi/2);
+ytick("$\pi$", pi);
+labelx("$O$", (0,0), SE);
+
+pair p1=ScaleX(1);
+pair p2=Scale((1,pi));
+pair p3=Scale((-1,pi));
+pair p4=ScaleX(-1);
+draw(p1--p2--p3--p4, dashdotted+0.2);
+
+label("\huge$\arccos x$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(15mm);
+
+real f(real x) { return atan(x); }
+draw(graph(f, -3, 3));
+
+xaxis("$x$", Ticks(Step=1, step=.5, NoZero));
+yaxis("$y$", ymin=-2, ymax=2, Ticks("%", Step=pi/2));
+ytick("$\displaystyle\frac{\pi}{2}$", pi/2);
+ytick("$\displaystyle\frac{-\pi}{2}$", -pi/2);
+labelx("$O$", (0,0), SE);
+yequals(pi/2, dashdotted);
+yequals(-pi/2, dashdotted);
+label("\huge$\arctan x$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(1.5cm);
+
+real f(real x) { return sinh(x); };
+draw(graph(f, -2, 2));
+
+xaxis("$x$", Ticks(NoZero, Step=1, step=.5, end=false), Arrow);
+yaxis("$y$", ymin=-3.7, Ticks(NoZero, Step=1, step=.5), Arrow);
+labelx("$O$", (0,0), SE);
+label("\huge$\sinh x = \frac{e^x - e^{-x}}{2}$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(1.5cm);
+
+real f(real x) { return cosh(x); };
+draw(graph(f, -2, 2));
+
+xaxis("$x$", Ticks(NoZero, Step=1, step=.5, end=false), Arrow);
+yaxis("$y$", ymin=-1.3, Ticks(NoZero, Step=1, step=.5), Arrow);
+labelx("$O$", (0,0), SE);
+label("\huge$\cosh x = \frac{e^x + e^{-x}}{2}$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(1.5cm);
+
+real f(real x) { return tanh(x); };
+draw(graph(f, -2, 2));
+
+xaxis("$x$", Ticks(NoZero, Step=1, step=.5, end=false), Arrow);
+yaxis("$y$", ymin=-1.5, ymax=1.5, Ticks(NoZero, Step=1, step=.5), Arrow);
+yequals(1, dashdotted+0.2);
+yequals(-1, dashdotted+0.2);
+labelx("$O$", (0,0), SE);
+label("\huge$\tanh x = \frac{\sinh x}{\cosh x}$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+size(8cm);
+
+real f (real x) { return erf(x); }
+real g (real x) { return erfc(x); }
+
+draw(graph(f, -5, 5), 0.7blue, legend="$\mathrm{erf}(x)$");
+draw(graph(g, -5, 5), 0.7green, legend="$\mathrm{erfc}(x)$");
+
+xaxis("$x$", Ticks(NoZero, Step=2, step=0.5), Arrow(SimpleHead));
+yaxis("$y$", Ticks(NoZero, Step=1, step=0.5), Arrow(SimpleHead));
+add(legend(p=invisible), (1.5,2.5));
+---------------------------------------------------
+
+[asymptote]
+import graph;
+size(7cm);
+
+real x(real t) { return cos(t); }
+real y(real t) { return sin(t); }
+
+draw(graph(x,y,0,2pi));
+axes(Label("$x$", EndPoint, 2E),
+     Label("$y$", EndPoint, 2N), Arrow);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+size(7cm);
+
+real a=4, b=3;
+real x(real t) { return a*cos(t); }
+real y(real t) { return b*sin(t); }
+
+draw(graph(x,y,0,2pi));
+axes(Label("$x$", EndPoint, 2E),
+     Label("$y$", EndPoint, 2N), Arrow);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+size(7cm);
+real a = 1;
+real x(real t)  { return a*(t-sin(t)); }
+real y(real t)  { return a*(1-cos(t)); }
+
+draw(graph(x, y, 0, 2.8pi));
+axes("$x$", "$y$");
+xtick("$\pi a$", pi );
+xtick("$2\pi a$", 2pi );
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(3cm);
+
+real r(real theta) { return 1; }
+
+draw(polargraph(r, 0, 2pi));
+axes(Label("$x$",EndPoint,2E),
+     Label("$y$",EndPoint,2N), Arrow);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(3cm);
+
+real r(real theta) { return sin(theta); }
+
+draw(polargraph(r, 0, pi));
+axes("$x$", Label("$y$",EndPoint,2N), Arrow);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(3cm);
+
+real r(real theta) { return cos(theta); }
+
+draw(polargraph(r, 0, pi));
+axes(Label("$x$",EndPoint,2E), "$y$", Arrow);
+---------------------------------------------------
+
+[asymptote]
+import graph;
+unitsize(3cm);
+
+real a = 1;
+real r(real theta) { return a*(1+cos(theta)); };
+draw(polargraph(r, -pi, pi));
+axes(Label("$x$", EndPoint, 2E),
+     Label("$y$", EndPoint, 2N));
+---------------------------------------------------
+
+[asymptote]
+import graph;
+size(6cm);
+
+real f (real x) { return sin(x);}
+guide g = graph(f, -pi, pi);
+path fillpath = buildcycle(g, (0,0)--(pi,0));
+
+fill(fillpath, palegreen);
+draw(g);
+axes("$x$", "$y$", p=blue, above=true);
+---------------------------------------------------
+
+[asymptote]
+/*
+picture hatch (real H=5mm, pair dir=NE, pen p=currentpen)
+void add (string name, picture pic, pair lb=0, pair rt=0)
+*/
+
+import graph;
+import patterns;
+size(6cm);
+
+real f (real x) { return sin(x);}
+guide g = graph(f, -pi, pi);
+path fillpath = buildcycle(g, (0,0)--(pi,0));
+
+add("hatch", hatch(H=2mm, dir=NNE, p=orange+0.2));
+fill(g=fillpath, p=pattern("hatch"));
+draw(g);
+axes("$x$", "$y$", p=blue, above=true);
+---------------------------------------------------

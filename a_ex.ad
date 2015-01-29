@@ -1,0 +1,186 @@
+[asymptote]
+unitsize(2cm);
+draw(unitcircle);
+dot((0,0));
+draw("$r$", (0,0)--ENE, blue, Arrow(SimpleHead));
+label("\Large$S=\pi r^2$", (0,-1.5));
+label("\Large$\ell = 2 \pi r$", (0,-2.0));
+---------------------------------------------------
+
+[asymptote]
+unitsize(1cm);
+draw(ellipse((0,0), 2, 1.5));
+dot(0);
+draw("$a$", (0,0)--(2,0), blue, Arrow);
+draw("$b$", (0,0)--(0,1.5), blue, Arrow(HookHead));
+label("\Large$S=\pi a b$", (0,-2));
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen angmark = 0.8blue+0.2;
+
+/* 三角形 */
+point A=(0,0), B=(5,0), C=(4,3);
+triangle t = triangle(A,B,C);
+show(La="", Lb="", Lc="", t);
+
+/* 角度の記号 */
+markangle("$\alpha$", radius=10, B, A, C, angmark);
+markangle("$\beta$" , radius=10, C, B, A, angmark);
+markangle("$\gamma$", radius=10, A, C, B, angmark);
+label("$\alpha+\beta+\gamma=180^\circ$", (3,-1), fontsize(18pt));
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen angmark = orange+0.2;
+
+/* 三角形 */
+point A=(0,0), B=(5,0), C=(4,3), D=(6,0);
+triangle t = triangle(A,B,C);
+show(La="", Lb="", Lc="", t);
+
+/* 角度の記号 */
+draw(B--D, angmark);
+markangle("$\alpha$", radius=10, B, A, C, angmark);
+markangle("$\gamma$", radius=10, A, C, B, angmark);
+markangle("$\alpha+\gamma$" , radius=10, D, B, C, angmark);
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen angmark = 0.8blue+0.2;
+
+/* 図形 */
+point A=(0,0), B=(5,-3), C=(4,0), D=(6,3);
+path p = A--B--C--D--cycle;
+filldraw(p, fillpen=palegreen, drawpen=darkgreen);
+label("$A$", A, W, angmark);
+label("$B$", B, S, angmark);
+label("$C$", C, W, angmark);
+label("$D$", D, N, angmark);
+
+/* 角度の記号 */
+markangle("$\alpha$", radius=10, B, A, D, angmark);
+markangle("$\beta$", radius=10, C, B, A, angmark);
+markangle("$\gamma$", radius=10, B, C, D, angmark);
+markangle("$\delta$", radius=10, A, D, C, angmark);
+label("$\gamma=\alpha+\beta+\delta$", (3, -4), fontsize(18pt)+purple);
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen angmark = blue+0.3;
+
+/* 図 */
+real r = 2;
+circle cl = circle(origin, r);
+point A = angpoint(cl, 220);
+point B = angpoint(cl, -20);
+point P = angpoint(cl, 100);
+path g = A--origin--B--P--cycle;
+draw(cl);
+filldraw(g, paleyellow, orange);
+
+/* 角度の記号 */
+markangle(radius=10, A, origin, B, angmark);
+markangle(radius=10, A, P, B, angmark);
+
+/* 文字 */
+label("$A$", A, SW);
+label("$O$", origin, N);
+label("$B$", B, SE);
+label("$P$", P, N);
+label("$\displaystyle \angle APB = \frac{1}{2} \angle AOB$", (0,-2), S);
+---------------------------------------------------
+
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen angmark = blue+0.3;
+
+/* 図 */
+real r = 2;
+circle cl = circle(origin, r);
+point A = angpoint(cl, 180);
+point B = angpoint(cl, 0);
+point P = angpoint(cl, 100);
+path g = A--B--P--cycle;
+draw(cl);
+draw(g);
+
+dot("$O$", origin, S);                  // 原点
+markrightangle(A, P, B, 10, angmark);   // 直角の記号
+
+/* 文字 */
+label("$A$", A, SW);
+label("$B$", B, SE);
+label("$P$", P, N);
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen ang = linewidth(0.2);
+
+/* 円 */
+real r = 2;
+circle cl = circle(origin, r);
+draw(cl);
+
+/* 図 */
+point A = angpoint(cl, 140);
+point B = angpoint(cl, 210);
+point C = angpoint(cl, -45);
+point D = angpoint(cl, 60);
+path g = A--B--D--C--cycle;
+draw(g);
+label("$A$", A, NW);
+label("$B$", B, SW);
+label("$C$", C, SE);
+label("$D$", D, NE);
+
+/* 角度の記号 */
+markangle(radius=10, "$\alpha$", B,A,C, ang);
+markangle(radius=10, "$\delta$", B,D,C, ang);
+
+label("\huge$\angle \alpha = \angle \delta$", truepoint(S), 2S);
+---------------------------------------------------
+
+[asymptote]
+import geometry;
+unitsize(1cm);
+pen ang = linewidth(0.2);
+
+/* 円 */
+real r=2;
+circle cl = circle(origin, r);
+draw(cl);
+
+/* 四角形 */
+point A = angpoint(cl, 130);
+point D = angpoint(cl, 35);
+point e = (3, -1.7);
+line hl = line (0, e);   // 点Eをとおる水平線
+point[] p = intersectionpoints(hl, cl);
+path g = e--p[0]--A--D--p[1];  // p[0]=B, p[1]=C
+draw(g);
+
+/* 角度の記号 */
+markangle(radius=12, p[0],A,D, ang);
+markangle(radius=12, e,p[1],D, ang);
+
+/* 文字 */
+label("$A$", A, NW);
+label("$B$", p[0], SW);
+label("$C$", p[1], SE);
+label("$D$", D, NE);
+label("$E$", e, SE);
+label("\large$\angle BAD = \angle DCE$", truepoint(S), 2S);
+---------------------------------------------------

@@ -1,0 +1,75 @@
+== first asciidoc example include asymptote
+
+これは最初のasymptote include の例題です。
+
+asymptote script を awk で切り出して
+image context に置き換えて
+asy を動かして
+adoc には画像として読みコンでもらいます。
+asciidoctor-diagram にいつの日にか
+asymptote も取り込んでもらえる日がくるかもしれませんが
+ruby をさわりたくない。
+asciidoctor を hacking したくない。
+という理由で
+awk と make のお世話になることにしました。
+
+[asymptote]
+import graph;
+size(150,0);
+
+real f(real x) { return exp(x);}
+pair F(real x) {return (x,f(x));}
+
+xaxis("$x$");
+yaxis("$y$");
+draw(graph(f,-4,2,operator ..),red);
+labely(1,E);
+label("$e^x$",F(1),SE);
+-------------------------------------
+
+指数のグラフ
+
+を表示できますかな。
+
+ヒストグラム
+[asymptote]
+import graph;
+import stats;
+size(400,200,IgnoreAspect);
+int n=10000;
+real[] a=new real[n];
+for(int i=0; i < n; ++i) a[i]=Gaussrand();
+draw(graph(Gaussian,min(a),max(a)),blue);
+// Optionally calculate "optimal" number of bins a la Shimazaki and Shinomoto.
+int N=bins(a);
+histogram(a,min(a),max(a),N,normalize=true,low=0,lightred,black,bars=false);
+xaxis("$x$",BottomTop,LeftTicks);
+yaxis("$dP/dx$",LeftRight,RightTicks(trailingzero));
+-------------------------------------
+次は three
+[asymptote]
+import three;
+size(100,0);
+path3 g=(1,0,0)..(0,1,1)..(-1,0,0)..(0,-1,1)..cycle;
+draw(g);
+draw(((-1,-1,0)--(1,-1,0)--(1,1,0)--(-1,1,0)--cycle));
+-------------------------------------
+[asymptote]
+size(6cm,0);
+import bsp;
+real u=2.5;
+real v=1;
+currentprojection=oblique;
+path3 y=plane((2u,0,0),(0,2v,0),(-u,-v,0));
+path3 l=rotate(90,Z)*rotate(90,Y)*y;
+path3 g=rotate(90,X)*rotate(90,Y)*y;
+face[] faces;
+filldraw(faces.push(y),project(y),yellow);
+filldraw(faces.push(l),project(l),lightgrey);
+filldraw(faces.push(g),project(g),green);
+add(faces);
+-------------------------------------
+
+ここで終わりです。
+
+--first example: include asymptote script in asciidoc
